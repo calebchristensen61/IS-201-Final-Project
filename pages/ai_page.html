@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joke Generator</title>
+    <style>
+        /* --- Basic Reset & Font --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean sans-serif font */
+        }
+
+        /* --- Dark Blue Theme --- */
+        body {
+            background-color: #0a192f; /* Dark Navy Blue */
+            color: #ccd6f6; /* Light grayish-blue text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in element's total width/height */
+        }
+
+        /* --- Content Container --- */
+        .container {
+            background-color: #112240; /* Slightly lighter dark blue */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        /* --- Heading --- */
+        h1 {
+            color: #64ffda; /* Contrasting Aqua/Teal color */
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        /* --- Joke Display Area --- */
+        #jokeDisplay {
+            background-color: #0a192f; /* Same as body background */
+            border: 1px solid #1f3a61; /* Subtle border */
+            padding: 20px;
+            border-radius: 5px;
+            min-height: 100px; /* Prevent layout shift */
+            margin-bottom: 30px;
+            font-size: 1.2em;
+            line-height: 1.6;
+            display: flex; /* Use flexbox to center text vertically */
+            justify-content: center;
+            align-items: center;
+            color: #a8b2d1; /* Slightly dimmer text for joke area */
+        }
+
+        /* --- Button Styling --- */
+        button {
+            background-color: #64ffda; /* Aqua/Teal button */
+            color: #0a192f; /* Dark text on button */
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth transitions */
+        }
+
+        button:hover {
+            background-color: #52d1bc; /* Slightly darker shade on hover */
+        }
+
+        button:active {
+            transform: scale(0.98); /* Subtle press effect */
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .container {
+                padding: 30px;
+            }
+            #jokeDisplay {
+                font-size: 1.1em;
+                min-height: 80px;
+            }
+            button {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="container">
+        <h1>Joke Generator</h1>
+        <div id="jokeDisplay">
+            Click the button to see a joke!
+        </div>
+        <button id="newJokeButton">Get Another Joke</button>
+    </div>
+
+    <script>
+        // --- Array of Jokes ---
+        const jokes = [
+            // Original Jokes
+            "Why don't scientists trust atoms? Because they make up everything!",
+            "Why did the scarecrow win an award? Because he was outstanding in his field!",
+            "Why don't eggs tell jokes? They'd crack each other up!",
+            "What do you call fake spaghetti? An impasta!",
+            "Why did the bicycle fall over? Because it was two tired!",
+            "How does a penguin build its house? Igloos it together!",
+            "What do you call a lazy kangaroo? Pouch potato!",
+            "Why did the golfer wear two pairs of pants? In case he got a hole-in-one!",
+            "Can February March? No, but April May!",
+            "What musical instrument is found in the bathroom? A tuba toothpaste!",
+            "Why couldn't the pony sing a lullaby? She was a little horse!",
+            "What did the left eye say to the right eye? Between you and me, something smells!",
+            "Why was the math book sad? Because it had too many problems.",
+            "What do you call a fish with no eyes? Fsh!",
+            "How do you organize a space party? You planet!",
+
+            // Added 50 More Jokes
+            "Why don't skeletons fight each other? They don't have the guts.",
+            "What do you call a sad strawberry? A blueberry.",
+            "Why did the invisible man turn down the job offer? He couldn't see himself doing it.",
+            "I told my wife she was drawing her eyebrows too high. She looked surprised.",
+            "Why did the coffee file a police report? It got mugged.",
+            "What's orange and sounds like a parrot? A carrot.",
+            "Why did the stadium get hot after the game? All the fans left.",
+            "What do you call a boomerang that won't come back? A stick.",
+            "Why was the belt arrested? For holding up a pair of pants!",
+            "What do you call a lazy joey? Pouch potato!", // Slightly different variation
+            "I'm reading a book about anti-gravity. It's impossible to put down!",
+            "What do you get when you cross a snowman and a vampire? Frostbite.",
+            "Why don't programmers like nature? It has too many bugs.",
+            "What has one eye but can't see? A needle.",
+            "Why did the teddy bear say no to dessert? Because she was stuffed.",
+            "What kind of music do planets like? Neptunes.",
+            "Why did the cookie go to the doctor? Because it felt crummy.",
+            "What do you call a parade of rabbits hopping backwards? A receding hare-line.",
+            "What's a vampire's favorite fruit? A blood orange.",
+            "Why did the picture go to jail? Because it was framed.",
+            "How does a scientist freshen their breath? With experi-mints.",
+            "What do you call a sleeping bull? A bulldozer.",
+            "Why are ghosts bad liars? Because you can see right through them.",
+            "What do you call a factory that makes okay products? A satisfactory.",
+            "Why did the tomato turn red? Because it saw the salad dressing!",
+            "What's brown and sticky? A stick.",
+            "Why can't you give Elsa a balloon? Because she will let it go.",
+            "What do you call a group of musical whales? An orca-stra.",
+            "Why was the computer cold? It left its Windows open!",
+            "What kind of shoes do ninjas wear? Sneakers.",
+            "What did the janitor say when he jumped out of the closet? Supplies!",
+            "Why did the man put his money in the blender? He wanted to make liquid assets.",
+            "How do you make a tissue dance? You put a little boogie in it.",
+            "What's the best thing about Switzerland? I don't know, but the flag is a big plus.",
+            "Why don't oysters donate to charity? Because they are shellfish.",
+            "What do you call a lazy chimney sweep? Someone who doesn't give a soot.",
+            "Why did the student eat his homework? Because the teacher told him it was a piece of cake!",
+            "What do you get from a pampered cow? Spoiled milk.",
+            "Why did the chewing gum cross the road? It was stuck to the chicken's foot.",
+            "What has four wheels and flies? A garbage truck.",
+            "Why did the scarecrow become a successful neurosurgeon? He was outstanding in his field.", // Variation
+            "What do you call a fish wearing a bowtie? Sofishticated.",
+            "Why did the psychic fail his driving test? He didn't see the stop sign coming.",
+            "What do you call a dog magician? A labracadabrador.",
+            "Why did the banana go to the doctor? Because it wasn't peeling well.",
+            "What do you call a belt made of watches? A waist of time.",
+            "Why are pirates called pirates? Because they arrrr!",
+            "What kind of exercise do lazy people do? Diddly-squats.",
+            "Why can't a leopard hide? Because he's always spotted.",
+            "How do you make holy water? You boil the hell out of it."
+        ];
+
+        // --- Get HTML Elements ---
+        const jokeDisplayElement = document.getElementById('jokeDisplay');
+        const newJokeButton = document.getElementById('newJokeButton');
+
+        // --- Function to Display a Random Joke ---
+        function displayNewJoke() {
+            // Generate a random index
+            const randomIndex = Math.floor(Math.random() * jokes.length);
+            // Get the joke at that index
+            const randomJoke = jokes[randomIndex];
+            // Update the text content of the joke display area
+            jokeDisplayElement.textContent = randomJoke;
+        }
+
+        // --- Add Event Listener to the Button ---
+        // When the button is clicked, call the displayNewJoke function
+        newJokeButton.addEventListener('click', displayNewJoke);
+
+        // --- Optional: Display a joke on initial page load ---
+        // displayNewJoke(); // You can uncomment this line if you want a joke immediately
+
+    </script>
+    <h1> <a href="../pages/made_by_me.html"> Back to Original Site</a></h1>
+</body>
+</html>

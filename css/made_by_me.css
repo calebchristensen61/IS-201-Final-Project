@@ -1,0 +1,46 @@
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+    background-color: rgb(189, 211, 245);
+}
+
+a:hover {
+    text-decoration: line-through;
+    color: rgb(43, 49, 226);
+}
+
+a:visited {
+    color: red;
+}
+
+.headers{
+    font-family: 'Times New Roman', Times, serif;
+    color: blueviolet
+   
+}
+
+
+.common_div {
+background-color: rgb(120, 102, 239);
+border: 2px solid;
+position: absolute;
+overflow: auto;
+padding: 2px;
+}
+
+
+
+.main_div{
+left: 650px
+}
+
+.left_div{
+left: 5px;
+}
+
+.right_div{
+right: 5px;
+}
+
+

@@ -1,0 +1,13 @@
+body {
+    font-family: 'Times New Roman', Times, serif !important;
+    color: black !important;
+    background-color: whitesmoke !important;
+}
+
+.sidebar {
+    background-color: rgb(109, 162, 248) !important;
+}
+
+.mytext {
+    color: rgb(109, 162, 248) !important;
+}
